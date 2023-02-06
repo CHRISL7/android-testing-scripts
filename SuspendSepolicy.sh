@@ -18,7 +18,7 @@ wakeup_attr="u:object_r:sysfs_wakeup:s0"
 wakeup_paths=()
 unlabeled_paths=()
 get_wakeup_paths() {
-    adb shell 'paths=()
+    su -c 'paths=()
         wakeup_dir=/sys/class/wakeup
         cd $wakeup_dir
         for file in $wakeup_dir/*; do
@@ -27,7 +27,7 @@ get_wakeup_paths() {
         echo "${paths[@]}"'
 }
 has_wakeup_attr() { #path
-    adb shell ls -dZ "$1" | grep -q "$wakeup_attr"
+    su -c ls -dZ "$1" | grep -q "$wakeup_attr"
     return $?
 }
 check_wakeup_dup() { # wakeup_path
